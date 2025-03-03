@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yes</title>
+    <style>
+        body {
+            background-image: url("background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 80%;
+            height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            box-sizing: border-box;
+        }
+
+        .column {
+            width: 33.33%;
+            padding: 5px;
+        }
+
+        /* Optional: If you want the images to stay responsive */
+        .column img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="column">
+            <img src="yippee-cheer.gif" alt="Snow">
+        </div>
+        <div class="column">
+            <img src="yippee-cheer.gif" alt="Forest">
+        </div>
+        <div class="column">
+            <img src="yippee-cheer.gif" alt="Mountains">
+        </div>
+    </div>
+    
+    <script>
+        const duration = 15 * 1000, // 15 seconds
+              animationEnd = Date.now() + duration,
+              defaults = {
+                startVelocity: 30,
+                spread: 360,
+                ticks: 60,
+                zIndex: 0,
+                shapes: ["heart"], // Heart-shaped particles
+                colors: ["FFC0CB", "FF69B4", "FF1493", "C71585"], // Pink and red colors
+                scalar: 3
+              };
+    
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+    
+        const interval = setInterval(function() {
+            const timeLeft = animationEnd - Date.now();
+    
+            if (timeLeft <= 0) {
+                return clearInterval(interval); // Stop after 15 seconds
+            }
+    
+            const particleCount = 50 * (timeLeft / duration); // Gradually decrease particle count over time
+    
+            // Confetti falling from the left side
+            confetti(
+                Object.assign({}, defaults, {
+                    particleCount,
+                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+                })
+            );
+            
+            // Confetti falling from the right side
+            confetti(
+                Object.assign({}, defaults, {
+                    particleCount,
+                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+                })
+            );
+        }, 250); // Interval of 250ms
+    </script>
+</body>
+</html>

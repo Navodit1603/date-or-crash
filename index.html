@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halle</title>
+    <style>
+        body {
+            background-image: url("background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .button {
+            background-color: #fb7f7f;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            font-size: 16px;
+            border-radius: 20%;
+            cursor: pointer;
+        }
+
+        .container {
+            width: 80%;
+            height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        h1 {
+            color: white;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            border: 2px solid black;
+            background-color: #ECE9D8;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .modal-header {
+            background: #000080;
+            color: white;
+            padding: 5px;
+            font-weight: bold;
+        }
+
+        .modal-body {
+            padding: 15px;
+            font-size: 14px;
+        }
+
+        .modal-footer {
+            padding: 10px;
+        }
+
+        .ok-btn {
+            background: #C0C0C0;
+            color: black;
+            border: 1px solid black;
+            padding: 5px 20px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Will You Be My Valentine?</h1>
+        <div>
+            <button class="button" onclick="window.location.href='yes.html';">Yes</button>
+            <button class="button" onmouseover="changePosition()" id="no">No</button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="errorModal" class="modal" onclick="hideAndReset()">
+        <img src="error.jpg"></img>
+    </div>
+
+    <script>
+        let count = 0;
+
+        function changePosition() {
+            const noButton = document.getElementById('no');
+            const randomX = Math.random() * 70;
+            const randomY = Math.random() * 70;
+            noButton.style.position = 'absolute';
+            noButton.style.left = randomX + '%';
+            noButton.style.top = randomY + '%';
+            count++;
+            console.log(count);
+
+            if (count == 10) {
+                showImage();
+            }
+            if (count > 10) {
+                increaseOpacity();
+            }
+            if (count > 20) {
+                showModal();
+            }
+        }
+
+        function showImage() {
+            var img = document.createElement("img");
+            img.id = "diss_cat";
+            img.src = "diss_cat.jpg";
+            img.style.opacity = 0.1;
+            document.body.appendChild(img);
+        }
+
+        function increaseOpacity() {
+            const image = document.getElementById("diss_cat");
+            const opacityString = getComputedStyle(image).opacity;
+            const opacity = parseFloat(opacityString);
+            image.style.opacity = opacity + 0.1;
+        }
+
+        function showModal() {
+            document.getElementById("errorModal").style.display = "block";
+            const audio = new Audio('errorSound.mp3');
+            audio.play().catch(error => {
+                console.log("Audio play failed:", error);
+            });
+        }
+
+        function closeModal() {
+            document.getElementById("errorModal").style.display = "none";
+        }
+
+        function hideAndReset(){
+            location.reload()
+        }
+    </script>
+</body>
+</html>
